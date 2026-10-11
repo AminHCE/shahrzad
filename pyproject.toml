@@ -1,0 +1,47 @@
+[tool.poetry]
+name = "shahrzad-notifications"
+version = "0.1.0"
+description = "Production-minded notification dispatch service (sms / email / push) built with Django, DRF, Celery and Redis."
+authors = ["Amin <amin@example.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.15"
+django = ">=5.2,<6.0"
+djangorestframework = ">=3.16,<4.0"
+djangorestframework-simplejwt = ">=5.5,<6.0"
+celery = { version = ">=5.5,<6.0", extras = ["redis"] }
+redis = { version = ">=5.2,<7.0", extras = ["hiredis"] }
+psycopg = { version = ">=3.2,<4.0", extras = ["binary", "pool"] }
+django-environ = ">=0.12"
+drf-spectacular = ">=0.28,<1"
+gunicorn = ">=23.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.3"
+pytest-django = ">=4.9"
+pytest-cov = ">=6.0"
+fakeredis = { version = ">=2.26", extras = ["lua"] }
+ruff = ">=0.8"
+flower = ">=2.0"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings.test"
+python_files = ["test_*.py"]
+testpaths = ["apps"]
+addopts = "-ra --strict-markers"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+exclude = ["migrations"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "N", "W"]
+ignore = ["N818"]
+
+[build-system]
+requires = ["poetry-core>=1.9"]
+build-backend = "poetry.core.masonry.api"
